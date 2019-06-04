@@ -1,5 +1,6 @@
 - Desafios/Problemas para a execução do projeto: 
   - Nunca tinha desenvolvido projetos WEB antes, foi minha primeira experiência com esse tipo de aplicação.
+  - Não consegui trabalhar com o envio de fotos para o banco de dados.
   - Documentação escassa na internet sobre como realmente desenvolver este projeto.
   - Infelizmente não consegui fazer o front end funcionar.
 
