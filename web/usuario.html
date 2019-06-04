@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Usuarios</title>
+<link rel="stylesheet" href="css/style.css" />
+
+</head>
+
+<body>
+
+<div class="header">
+	<input type="text" id="pesquisa"/>
+	<button id="btnPesquisa">Search</button>
+	<button id="btnNovo">Novo Usuario</button>
+        
+</div>
+
+
+<div class="leftArea">
+<ul id="listaUsuarios"></ul>
+</div>
+
+<form id="formUsuario">
+	
+<div class="mainArea">
+
+<label>Id:</label>
+<input id="idUsuario" name="id" type="text" disabled />
+
+<label>Nome:</label>
+<input type="text" id="nome" name="nome" required>
+
+<label>Endereço:</label>
+<input type="text" id="endereco" name="endereco"/>
+
+<label>Cargo:</label>
+<input type="text" id="cargo" name="cargo"/>
+
+<label>Horario de Trabalho: </label>
+<input type="text" id="horariosTrabalho" name="horariosTrabalho"/>
+
+
+
+<button id="btnSalvar">Inserir</button>
+<button id="btnDelete">Excluir</button>
+<button id="btnListar">Listar Todos</button>
+
+</div>
+
+<div class="rightArea">
+
+
+
+<label>Notes:</label>
+<textarea id="descricao" name="description"></textarea>
+</div>
+
+</form>
+
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/usuario.js"></script>
+
+</body>
+</html>
