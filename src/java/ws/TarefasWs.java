@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ws;
 
 import model.TarefasModel;
@@ -30,37 +25,23 @@ public class TarefasWs {
     TarefaController controle = new TarefaController();
     TarefasModel tarefas = new TarefasModel();
     Gson gson  = new Gson();
-
     @Context
     private UriInfo context;
-
-    /**
-     * Creates a new instance of GenericResource
-     */
     public TarefasWs() {
     }
 
-    /**
-     * Retrieves representation of an instance of ws.TarefasWs
-     * @return an instance of java.lang.String
-     */
     @GET
     @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
-    
     @Path("tarefas")
     public String getJson() {
-        
         String resultado = gson.toJson(controle.listarTarefas());
         return resultado;
-        
-    }
+    } 
     
     @GET
     @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
-   
     @Path("tarefas/{id}")
     public String getTarefasId(@PathParam("id") int id){
-        
         String resultado = gson.toJson(controle.listarPorId(id));
         return resultado;
     }
@@ -68,7 +49,6 @@ public class TarefasWs {
     @DELETE
     @Path("tarefas/{id}")
     public void deletaTarefa(@PathParam("id") int id ){
-        
         controle.deletar(id);
  }  
     
@@ -76,30 +56,16 @@ public class TarefasWs {
     @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("tarefas/inserir")
-    public void insereUsuario(String tarefa){
-        gson.fromJson(tarefa, TarefasModel.class );
-        controle.cadastrar(tarefas);
+    public void insereTarefa(TarefasModel tarefa){
+        controle.cadastrar(tarefa);
     }
     
     @PUT
     @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("tarefas/atualizar/{id}")
-    public void atualizaUsuario(String tarefa){
-        gson.fromJson(tarefa, TarefasModel.class);
-        controle.editar(tarefas);
-        
-        
-    }
-    
-
-    /**
-     * PUT method for updating or creating an instance of TarefasWs
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/xml")
-    public void putXml(String content) {
+    @Path("tarefas/{id}")
+    public void atualizaUsuario(@PathParam("id") int idTarefa ,TarefasModel tarefa){
+        controle.editar(tarefa,idTarefa);
+        System.out.println("Editando Tarefa" + tarefa.getDescricao());
     }
 }

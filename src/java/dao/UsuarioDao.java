@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import interfaces.InterfaceUsuario;
@@ -14,9 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import model.UsuarioModel;
-
 /**
  *
  * @author gilso
@@ -40,21 +33,18 @@ public class UsuarioDao implements InterfaceUsuario {
             this.stmt.setString(3, entidade.getEndereco());
             this.stmt.setString(4, entidade.getCargo());
             this.stmt.setString(5, entidade.getHorariosDeTrabalho());
-
             this.stmt.executeUpdate();
-
         } catch (SQLException ex) {
             Logger.getLogger(TarefasDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             connection.ConnectionFactory.closeConnection(con, stmt);
         }
-
     }
 
     @Override
-    public void editar(UsuarioModel entidade) {
+    public void editar(UsuarioModel entidade, int idUsuario) {
         this.con = connection.ConnectionFactory.getConnection();
-        String sql = "UPDATE Usuario set Nome = ?, Foto= ?, Endereco = ?, Cargo= ?, HorariosTrabalho= ?";
+        String sql = "UPDATE Usuario set Nome = ?, Foto= ?, Endereco = ?, Cargo= ?, HorariosTrabalho= ? WHERE id = ?";
 
         try {
             this.stmt = this.con.prepareStatement(sql);
@@ -63,6 +53,8 @@ public class UsuarioDao implements InterfaceUsuario {
             this.stmt.setString(3, entidade.getEndereco());
             this.stmt.setString(4, entidade.getCargo());
             this.stmt.setString(5, entidade.getHorariosDeTrabalho());
+            this.stmt.setInt(6, idUsuario);
+            this.stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(TarefasDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -79,7 +71,6 @@ public class UsuarioDao implements InterfaceUsuario {
            String sql = "SELECT * FROM Usuario";
            this.stmt = this.con.prepareStatement(sql);
            this.rs = this.stmt.executeQuery();
-           
            while (this.rs.next()){
                UsuarioModel usuario = new UsuarioModel();
                usuario.setNome(rs.getString("Nome"));
@@ -89,7 +80,6 @@ public class UsuarioDao implements InterfaceUsuario {
                usuario.setHorariosDeTrabalho(rs.getString("HorariosTrabalho"));
                usuarios.add(usuario);
            }
-           
        } catch (SQLException ex) {
             Logger.getLogger(TarefasDao.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -107,10 +97,8 @@ public class UsuarioDao implements InterfaceUsuario {
         try{
             this.stmt = this.con.prepareStatement(sql);
             this.stmt.setInt(1, idusuario);
-            
             this.stmt.execute();
-            
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(TarefasDao.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -122,15 +110,12 @@ public class UsuarioDao implements InterfaceUsuario {
     public List<UsuarioModel> listarPorId(int idUsuario){
         List<UsuarioModel> usuarios;
         usuarios = new ArrayList<>();
-       
            this.con = connection.ConnectionFactory.getConnection();
            String sql = "SELECT * FROM Usuario WHERE ID = ?";
            try{
            this.stmt = con.prepareStatement(sql);
            this.stmt.setInt(1, idUsuario);
-           
            this.rs = this.stmt.executeQuery();
-           
            while (this.rs.next()){
                UsuarioModel usuario = new UsuarioModel();
                usuario.setNome(rs.getString("Nome"));
@@ -148,7 +133,5 @@ public class UsuarioDao implements InterfaceUsuario {
            connection.ConnectionFactory.closeConnection(con, stmt);
        }
        return usuarios;
-        
     }
-
 }

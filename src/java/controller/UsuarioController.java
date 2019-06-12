@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
-
 
 import dao.UsuarioDao;
 import model.UsuarioModel;
 import interfaces.InterfaceUsuario;
 import java.util.ArrayList;
 import java.util.List;
-
-
 /**
  *
  * @author gilso
@@ -30,8 +22,8 @@ public class UsuarioController implements InterfaceUsuario{
     }
 
     @Override
-    public void editar(UsuarioModel entidade) {
-        dao.editar(entidade);
+    public void editar(UsuarioModel entidade, int idUsuario) {
+        dao.editar(entidade, idUsuario);
     }
 
     @Override
@@ -39,7 +31,6 @@ public class UsuarioController implements InterfaceUsuario{
         List<UsuarioModel> usuarios = new ArrayList<>();
         usuarios = dao.listarUsuario();
         return usuarios;
-        
     }
 
     @Override
@@ -52,5 +43,4 @@ public class UsuarioController implements InterfaceUsuario{
         usuarios = dao.listarPorId(idUsuario);
         return usuarios;
     }
-    
 }

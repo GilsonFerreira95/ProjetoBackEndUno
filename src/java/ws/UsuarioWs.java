@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ws;
 
 import model.UsuarioModel;
@@ -20,7 +15,6 @@ import controller.UsuarioController;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.MediaType;
-
 /**
  * REST Web Service
  *
@@ -28,25 +22,16 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("/usuarios")
 public class UsuarioWs {
-
     Gson gson = new Gson();
     UsuarioModel u = new UsuarioModel();
     UsuarioController controle = new UsuarioController();
-
     @Context
     private UriInfo context;
 
-    /**
-     * Creates a new instance of GenericResource
-     */
     public UsuarioWs() {
     }
 
-    /**
-     * Retrieves representation of an instance of ws.UsuarioWs
-     *
-     * @return an instance of java.lang.String
-     */
+    
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("usuario")
@@ -64,13 +49,14 @@ public class UsuarioWs {
     }
 
     @DELETE
-    @Path("{id}")
+    @Path("usuario/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public void remove(@PathParam("id") int id) {
         controle.deletar(id);
     }
 
     @POST
+    @Path("usuario/inserir")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public void inserir(UsuarioModel usuario) {
@@ -80,23 +66,12 @@ public class UsuarioWs {
     }
 
     @PUT
-    @Path("{id}")
+    @Path("usuario/{id}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public void editar(UsuarioModel usuario) {
+    public void editar(@PathParam("id") int idUsuario, UsuarioModel usuario) {
         System.out.println("Editando Usuario" + usuario.getNome());
-        controle.editar(usuario);
+        controle.editar(usuario, idUsuario);
 
-    }
-
-    /**
-     * PUT method for updating or creating an instance of UsuarioWs
-     *
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/xml")
-    public void putXml(String content) {
     }
 }

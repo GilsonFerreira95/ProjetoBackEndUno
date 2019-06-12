@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
-
 /**
  *
  * @author gilso
@@ -15,20 +9,30 @@ public class TarefasModel {
     private String tempoEstimado;
     private String categoria;
     private String situacao;
-    private UsuarioModel usuarioId;
+    private String nomeUsuario;
+    private int idUsuario;
 
-    public TarefasModel(int id, String descricao, String tempoEstimado, String categoria, String situacao, UsuarioModel usuarioId) {
+    public TarefasModel(int id, String descricao, String tempoEstimado, String categoria, String situacao, String nomeUsuario) {
         this.id = id;
         this.descricao = descricao;
         this.tempoEstimado = tempoEstimado;
         this.categoria = categoria;
         this.situacao = situacao;
-        this.usuarioId = usuarioId;
+        this.nomeUsuario = nomeUsuario;
     }
 
     public TarefasModel() {
     }
 
+    public void setIdUsuario(int idUsuario){
+        this.idUsuario = idUsuario;
+    }
+    
+    public int getIdUsuario(){
+        return idUsuario;
+    }
+    
+    
     public int getId() {
         return id;
     }
@@ -68,15 +72,12 @@ public class TarefasModel {
     public void setSituacao(String situacao) {
         this.situacao = situacao;
     }
-
-    public UsuarioModel getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(UsuarioModel usuarioId) {
-        this.usuarioId = usuarioId;
+    
+    public void setNomeUsuario(String nomeUsuario){
+        this.nomeUsuario = nomeUsuario;
     }
     
-    
-    
+    public String getNomeUsuario(){
+        return nomeUsuario;
+    }   
 }

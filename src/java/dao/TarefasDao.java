@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
-import model.TarefasModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
 /**
  *
  * @author gilso
@@ -40,7 +32,7 @@ public class TarefasDao implements InterfaceTarefas {
             this.stmt.setString(2, entidade.getTempoEstimado());
             this.stmt.setString(3, entidade.getCategoria());
             this.stmt.setString(4, entidade.getSituacao());
-            this.stmt.setInt(5, entidade.getUsuarioId().getId());
+            this.stmt.setInt(5, entidade.getIdUsuario());
             
             this.stmt.executeUpdate();
             
@@ -53,9 +45,9 @@ public class TarefasDao implements InterfaceTarefas {
     }
 
     @Override
-    public void editar(TarefasModel entidade) {
+    public void editar(TarefasModel entidade, int idTarefa) {
         this.con = connection.ConnectionFactory.getConnection();
-        String sql = "UPDATE Tarefas set Descricao = ?, TempoEstimado = ?, Categoria = ?, Situacao = ?, IdUsuario = ?";
+        String sql = "UPDATE Tarefas set Descricao = ?, TempoEstimado = ?, Categoria = ?, Situacao = ?, IdUsuario = ? WHERE id = ?";
         
         try{
             this.stmt = this.con.prepareStatement(sql);
@@ -63,7 +55,9 @@ public class TarefasDao implements InterfaceTarefas {
             this.stmt.setString(2, entidade.getTempoEstimado());
             this.stmt.setString(3, entidade.getCategoria());
             this.stmt.setString(4, entidade.getSituacao());
-            this.stmt.setInt(5, entidade.getUsuarioId().getId());
+            this.stmt.setInt(5, entidade.getIdUsuario());
+            this.stmt.setInt(6, idTarefa);
+            this.stmt.execute();
         } catch (SQLException ex) {
             Logger.getLogger(TarefasDao.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -72,26 +66,22 @@ public class TarefasDao implements InterfaceTarefas {
         }
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public List<TarefasModel> listarTarefas() {
        ArrayList<TarefasModel> tarefas = new ArrayList<>();
        try{
            this.con = connection.ConnectionFactory.getConnection();
-           String sql = "SELECT * FROM TAREFAS";
+           String sql = "SELECT Tarefas.id, descricao,tempoestimado,categoria,situacao, nome FROM Tarefas, Usuario WHERE Usuario.id = idUsuario";
            this.stmt = this.con.prepareStatement(sql);
            this.rs = this.stmt.executeQuery();
-           
            while (this.rs.next()){
                TarefasModel tarefa = new TarefasModel();
+               tarefa.setId(rs.getInt("Tarefas.id"));
                tarefa.setDescricao(rs.getString("Descricao"));
                tarefa.setTempoEstimado(rs.getString("TempoEstimado"));
                tarefa.setCategoria(rs.getString("Categoria"));
                tarefa.setSituacao(rs.getString("Situacao"));
-               tarefa.getUsuarioId().setId(rs.getInt("IdUsuario"));
+               tarefa.setNomeUsuario(rs.getString("Nome"));
                tarefas.add(tarefa);
            }
            
@@ -111,10 +101,7 @@ public class TarefasDao implements InterfaceTarefas {
         try{
             this.stmt = con.prepareStatement(sql);
             this.stmt.setInt(1, idTarefa);
-            
-            this.stmt.execute();
-            
-            
+            this.stmt.execute();           
         } catch (SQLException ex) {
             Logger.getLogger(TarefasDao.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -131,15 +118,13 @@ public class TarefasDao implements InterfaceTarefas {
             this.stmt = con.prepareStatement(sql);
             this.stmt.setInt(1, idTarefa);
             this.rs = stmt.executeQuery();
-            
             while(rs.next()){
                 TarefasModel tarefa = new TarefasModel();
                 tarefa.setDescricao(rs.getString("descricao"));
                 tarefa.setTempoEstimado(rs.getString("tempoestimado"));
                 tarefa.setCategoria(rs.getString("categoria"));
                 tarefa.setSituacao(rs.getString("situacao"));
-                tarefa.getUsuarioId().setNome("nome");
-                
+                tarefa.setNomeUsuario("nome");
                 tarefas.add(tarefa);
             }
         } catch (SQLException ex) {
@@ -148,10 +133,6 @@ public class TarefasDao implements InterfaceTarefas {
         finally{
             connection.ConnectionFactory.closeConnection(con, stmt);
         }
-        
         return tarefas;
     }
-    
-    
-
 }

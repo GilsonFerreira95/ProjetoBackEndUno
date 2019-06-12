@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import dao.TarefasDao;
@@ -28,8 +23,8 @@ public class TarefaController implements InterfaceTarefas{
     }
 
     @Override
-    public void editar(TarefasModel entidade) {
-        dao.editar(entidade);
+    public void editar(TarefasModel entidade, int idTarefa) {
+        dao.editar(entidade, idTarefa);
     }
 
     @Override
@@ -49,6 +44,5 @@ public class TarefaController implements InterfaceTarefas{
         tarefas =  dao.listarPorId(idTarefas);
         return tarefas;
     }
-  
-    
+
 }
