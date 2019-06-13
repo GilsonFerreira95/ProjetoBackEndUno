@@ -34,7 +34,6 @@ public class UsuarioWs {
     
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("usuario")
     public List<UsuarioModel> listaTodos() {
         System.out.println("listaTodos");
         return controle.listarUsuario();
