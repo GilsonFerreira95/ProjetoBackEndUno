@@ -41,21 +41,21 @@ public class UsuarioWs {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("usuario/{id}")
+    @Path("listar/{id}")
     public List<UsuarioModel> listaUsuariosId(@PathParam("id") String id) {
         System.out.println("listarPorId" + id);
         return controle.listarPorId(Integer.parseInt(id));
     }
 
     @DELETE
-    @Path("usuario/{id}")
+    @Path("deletar/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public void remove(@PathParam("id") int id) {
         controle.deletar(id);
     }
 
     @POST
-    @Path("usuario/inserir")
+    @Path("/inserir")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public void inserir(UsuarioModel usuario) {
@@ -65,7 +65,7 @@ public class UsuarioWs {
     }
 
     @PUT
-    @Path("usuario/{id}")
+    @Path("atualizar/{id}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public void editar(@PathParam("id") int idUsuario, UsuarioModel usuario) {
