@@ -32,7 +32,6 @@ public class TarefasWs {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
-    @Path("tarefas")
     public String getJson() {
         String resultado = gson.toJson(controle.listarTarefas());
         return resultado;
