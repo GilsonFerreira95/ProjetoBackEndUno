@@ -39,14 +39,14 @@ public class TarefasWs {
     
     @GET
     @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
-    @Path("tarefas/{id}")
+    @Path("listar/{id}")
     public String getTarefasId(@PathParam("id") int id){
         String resultado = gson.toJson(controle.listarPorId(id));
         return resultado;
     }
     
     @DELETE
-    @Path("tarefas/{id}")
+    @Path("deletar/{id}")
     public void deletaTarefa(@PathParam("id") int id ){
         controle.deletar(id);
  }  
@@ -54,7 +54,7 @@ public class TarefasWs {
     @POST
     @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("tarefas/inserir")
+    @Path("/inserir")
     public void insereTarefa(TarefasModel tarefa){
         controle.cadastrar(tarefa);
     }
@@ -62,7 +62,7 @@ public class TarefasWs {
     @PUT
     @Produces({MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("tarefas/{id}")
+    @Path("atualizar/{id}")
     public void atualizaUsuario(@PathParam("id") int idTarefa ,TarefasModel tarefa){
         controle.editar(tarefa,idTarefa);
         System.out.println("Editando Tarefa" + tarefa.getDescricao());
